@@ -31,36 +31,21 @@ public class MT103Validator implements MTValidator {
             throw new RuntimeException("Block 4 missing");
         }
 
-        // -------------------------
-        // Mandatory Fields
-        // -------------------------
+        
         for (String tag : MANDATORY_FIELDS) {
             if (block4.getField(tag) == null) {
                 errors.add(new ValidationError(
                         tag, "T01", "Mandatory field missing"));
             }
         }
-
-        // -------------------------
-        // Group Rule (50A/50F/50K)
-        // -------------------------
         checkOrderingCustomerGroup(block4, errors);
 
-        // -------------------------
-        // Duplicate detection
-        // -------------------------
         DuplicateFieldValidator.checkNoDuplicates(block4, errors);
 
-        // -------------------------
-        // Format Rules
-        // -------------------------
         check23B(ast, errors);
         check71A(ast, errors);
         check32A(ast, errors);
 
-        // =========================
-        // Dynamic Conditional Rules (YAML driven)
-        // ========================
         System.out.println(
                 getClass().getClassLoader().getResource("mt103-rules.yaml")
         );
@@ -77,8 +62,6 @@ public class MT103Validator implements MTValidator {
         }
 
         engine.run(ast, errors);        // -------------------------
-        // Final Result
-        // -------------------------
         if (!errors.isEmpty()) {
             errors.forEach(System.out::println);
             throw new RuntimeException("MT103 validation failed: " + errors);
@@ -86,10 +69,6 @@ public class MT103Validator implements MTValidator {
 
         System.out.println("MT103 validation passed.");
     }
-
-    // =====================================================
-    // GROUP RULES
-    // =====================================================
 
     private void checkOrderingCustomerGroup(
             BlockNode block4,
@@ -109,16 +88,13 @@ public class MT103Validator implements MTValidator {
         }
     }
 
-    // =====================================================
-    // FORMAT RULES
-    // =====================================================
+    
 private void check23B(SwiftAst ast, List<ValidationError> errors) {
     FieldNode f = ast.getField("23B");
     if (f == null) return;
 
     String value = f.getValue().trim();
 
-    // Simple check without regex
     if (!"CRED".equals(value)) {
         errors.add(new ValidationError(
                 "23B", "T23B",
@@ -136,8 +112,6 @@ private void check71A(SwiftAst ast, List<ValidationError> errors) {
         return;
     }
 
-    // Remove all whitespace and control characters manually
-    // Keep only alphabetic characters (A-Z, a-z)
     StringBuilder sb = new StringBuilder();
     for (char c : rawValue.toCharArray()) {
         if (Character.isLetter(c)) {
@@ -165,7 +139,6 @@ private void check32A(SwiftAst ast, List<ValidationError> errors) {
 
     String value = f.getValue().trim();
 
-    // Check minimum length (6 for date + 3 for currency + at least 1 digit for amount)
     if (value.length() < 10) {
         errors.add(new ValidationError(
                 "32A", "T32A",
@@ -174,12 +147,11 @@ private void check32A(SwiftAst ast, List<ValidationError> errors) {
         return;
     }
 
-    //  Extract parts
     String datePart = value.substring(0, 6);
     String currencyPart = value.substring(6, 9);
     String amountPart = value.substring(9).replace(',', '.'); // normalize decimal
 
-    // Validate date (YYMMDD)
+    // Validate date 
     try {
         java.time.LocalDate.parse(datePart, java.time.format.DateTimeFormatter.ofPattern("yyMMdd"));
     } catch (Exception e) {
