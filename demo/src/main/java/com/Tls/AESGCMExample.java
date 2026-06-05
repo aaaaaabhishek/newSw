@@ -16,7 +16,6 @@ public class AESGCMExample {
         String data = "Hello SMS Vendor";
         String key = "12345678901234567890123456789012"; // 32 chars = 256-bit
 
-        // ----- Generate random IV -----
         byte[] iv = new byte[12]; // 12 bytes for GCM
         SECURE_RANDOM.nextBytes(iv);
 
@@ -26,7 +25,6 @@ public class AESGCMExample {
 
     }
 
-    // Encrypt method: returns Base64 of IV + ciphertext
     public static String encrypt(String plaintext, String key, byte[] iv) throws Exception {
         SecretKeySpec secretKey = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "AES");
         GCMParameterSpec gcmSpec = new GCMParameterSpec(128, iv);
@@ -36,7 +34,6 @@ public class AESGCMExample {
 
         byte[] ciphertext = cipher.doFinal(plaintext.getBytes(StandardCharsets.UTF_8));
 
-        // Combine IV : ciphertext for transmission
         byte[] combined = new byte[iv.length + ciphertext.length];
         System.arraycopy(iv, 0, combined, 0, iv.length);
         System.arraycopy(ciphertext, 0, combined, iv.length, ciphertext.length);
