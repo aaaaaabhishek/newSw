@@ -6,9 +6,6 @@ import java.io.FileWriter;
 
 public class MT103Builder {
 
-    // =====================================================
-    // MX → MT103 FIELD MAPPING
-    // =====================================================
     public static String buildMT103FromDocument(Document document) {
         StringBuilder mt = new StringBuilder();
 
@@ -39,7 +36,6 @@ public class MT103Builder {
         }
         mt.append("}");
 
-        // ------------------------ Block 4 start
         mt.append("{4:\n");
 
         // ------------------------ 20 - Transaction Reference
