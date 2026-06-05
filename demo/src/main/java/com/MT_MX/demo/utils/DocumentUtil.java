@@ -29,9 +29,7 @@ public class DocumentUtil {
         BlockNode b3 = ast.getBlock(3);
         BlockNode b4 = ast.getBlock(4);
 
-        // ======================================================
-        // 1️⃣ GROUP HEADER
-        // ======================================================
+        // GROUP HEADER
         GroupHeader131 grpHdr = new GroupHeader131();
         /// 108 if present
         String mur = b3.getFieldValue("108");
@@ -86,9 +84,7 @@ public class DocumentUtil {
             return document;
         }
 
-        // ======================================================
-        // 2️⃣ TRANSACTION
-        // ======================================================
+        //  TRANSACTION
         CreditTransferTransaction70 tx =
                 new CreditTransferTransaction70();
 
@@ -397,52 +393,7 @@ public class DocumentUtil {
             charges16.setAgt(instgAgt);
             tx.getChrgsInf().add(charges16);
         }
-//        List<FieldNode> f71Fs = b4.getFieldValue("71F");
-//
-//        if (f71Fs != null) {
-//            for (FieldNode f : f71Fs) {
-//
-//                String senderCharges = f.getValue();
-//
-//                if (senderCharges == null || senderCharges.isBlank()) continue;
-//                if (senderCharges.length() < 4) continue;
-//
-//                String currency = senderCharges.substring(0, 3);
-//                String amountStr = senderCharges.substring(3).replace(",", ".");
-//
-//                BigDecimal amount = new BigDecimal(amountStr);
-//
-//                Charges16 charges16 = new Charges16();
-//
-//                ActiveOrHistoricCurrencyAndAmount amt =
-//                        new ActiveOrHistoricCurrencyAndAmount();
-//
-//                amt.setCcy(currency);
-//                amt.setValue(amount);
-//
-//                charges16.setAmt(amt);
-//
-//                // Agent = Sender bank
-//                if (b1 != null) {
-//                    BranchAndFinancialInstitutionIdentification8 instgAgt =
-//                            new BranchAndFinancialInstitutionIdentification8();
-//
-//                    FinancialInstitutionIdentification23 finInst =
-//                            new FinancialInstitutionIdentification23();
-//
-//                    finInst.setBICFI(SwiftBicUtil.extractBic(b1));
-//
-//                    instgAgt.setFinInstnId(finInst);
-//                    charges16.setAgt(instgAgt);
-//                }
-//
-//                tx.getChrgsInf().add(charges16);
-//            }
-//        }
-        // ======================================================
         // 71A → Charges
-        // ======================================================
-// 71A → Charges
         String charges = b4.getFieldValue("71A");
 
         if (charges == null || charges.isBlank()) {
@@ -500,18 +451,18 @@ public class DocumentUtil {
         }
         String chargesG = b4.getFieldValue("71G");
         if (chargesG != null && !chargesG.isBlank()) {
-            // 1️⃣ Parse currency & amount
+            // Parse currency & amount
             String currency = chargesG.substring(0, 3);
             BigDecimal amount = new BigDecimal(chargesG.substring(3).replace(",", "."));
 
-            // 2️⃣ Create Charges16
+            //  Create Charges16
             Charges16 charge = new Charges16();
             ActiveOrHistoricCurrencyAndAmount amt = new ActiveOrHistoricCurrencyAndAmount();
             amt.setCcy(currency);
             amt.setValue(amount);
             charge.setAmt(amt);
 
-            // 3️⃣ Decide which agent to use (57A BIC if present, else Block 1)
+            //  Decide which agent to use (57A BIC if present, else Block 1)
             String bicFor71G = null;
             FieldNode f57 = b4.getField("57A");
             if (f57 != null && !f57.getValue().isBlank()) {
@@ -530,7 +481,7 @@ public class DocumentUtil {
             instgAgt.setFinInstnId(finInst);
             charge.setAgt(instgAgt);
 
-            // 4️⃣ Add to transaction
+            //  Add to transaction
             tx.getChrgsInf().add(charge);
         }
         if (b3.getFieldValue("77B") != null) {
