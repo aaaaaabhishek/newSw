@@ -14,7 +14,6 @@ public class RateLimiterService {
 
     private Bucket newBucket(String key) {
 
-        // 🔥 SEND LIMITS
         if (key.startsWith("SEND_GLOBAL")) {
             return Bucket.builder()
                     .addLimit(Bandwidth.classic(1000,
@@ -36,7 +35,6 @@ public class RateLimiterService {
                     .build();
         }
 
-        // 🔥 VERIFY LIMITS (STRONGER)
         if (key.startsWith("VERIFY_GLOBAL")) {
             return Bucket.builder()
                     .addLimit(Bandwidth.classic(2000,
