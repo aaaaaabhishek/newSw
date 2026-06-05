@@ -21,15 +21,9 @@ public class MT202CovValidator implements MTValidator{
     public void validate(SwiftAst ast) {
         List<ValidationError> errors=new ArrayList<>();
 
-        // =========================
-        // Dynamic Conditional Rules (YAML driven)
-        // ========================
         List<ConditionalRule> rules = ruleLoader.load("mt202COV-rules.yaml");
         ConditionalRuleEngine engine = new ConditionalRuleEngine(rules);
         engine.run(ast, errors);
-        // -------------------------
-        // Final Result
-        // -------------------------
         if (!errors.isEmpty()) {
             errors.forEach(System.out::println);
             throw new RuntimeException("MT202Cov validation failed: " + errors);
