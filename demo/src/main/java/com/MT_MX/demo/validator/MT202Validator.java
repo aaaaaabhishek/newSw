@@ -27,9 +27,7 @@ public class MT202Validator implements MTValidator{
         if (block4 == null) {
             throw new RuntimeException("Block 4 missing");
         }
-        // -------------------------
-        // Mandatory Fields
-        // -------------------------
+
         for(String tag:MANDATORY_FIELDS){
            if(block4.getFieldValue(tag)==null){
                errors.add(new ValidationError(
@@ -38,15 +36,10 @@ public class MT202Validator implements MTValidator{
        }
 
 
-        // =========================
-        // Dynamic Conditional Rules (YAML driven)
-        // ========================
         List<ConditionalRule> rules = ruleLoader.load("mt202-rules.yaml");
         ConditionalRuleEngine engine = new ConditionalRuleEngine(rules);
         engine.run(ast, errors);
-        // -------------------------
-        // Final Result
-        // -------------------------
+
         if (!errors.isEmpty()) {
             errors.forEach(System.out::println);
             throw new RuntimeException("MT202 validation failed: " + errors);
