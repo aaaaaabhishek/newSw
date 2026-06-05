@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema 
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="urn:iso:std:iso:20022:tech:xsd:head.001.001.02"
+    xmlns="urn:iso:std:iso:20022:tech:xsd:head.001.001.02"
+    elementFormDefault="qualified">
+
+    <!-- Root -->
+    <xs:element name="AppHdr" type="BusinessApplicationHeaderV02"/>
+
+    <!-- ================= HEADER ================= -->
+    <xs:complexType name="BusinessApplicationHeaderV02">
+        <xs:sequence>
+            <xs:element name="Fr" type="Party44Choice"/>
+            <xs:element name="To" type="Party44Choice"/>
+            <xs:element name="BizMsgIdr" type="Max35Text"/>
+            <xs:element name="MsgDefIdr" type="Max35Text"/>
+            <xs:element name="BizSvc" type="Max35Text" minOccurs="0"/>
+            <xs:element name="MktPrctc" type="ImplementationSpecification1" minOccurs="0"/>
+            <xs:element name="CreDt" type="xs:dateTime"/>
+            <xs:element name="CpyDplct" type="CopyDuplicate1Code" minOccurs="0"/>
+            <xs:element name="PssblDplct" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="Prty" type="Priority2Code" minOccurs="0"/>
+            <xs:element name="Sgntr" type="SignatureEnvelope" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- ================= PARTY ================= -->
+    <xs:complexType name="Party44Choice">
+        <xs:sequence>
+            <xs:element name="FIId" type="BranchAndFinancialInstitutionIdentification6"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="BranchAndFinancialInstitutionIdentification6">
+        <xs:sequence>
+            <xs:element name="FinInstnId" type="FinancialInstitutionIdentification18"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="FinancialInstitutionIdentification18">
+        <xs:sequence>
+            <xs:element name="BICFI" type="BICFIDec2014Identifier"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- ================= MARKET PRACTICE ================= -->
+    <xs:complexType name="ImplementationSpecification1">
+        <xs:sequence>
+            <xs:element name="Regy" type="Max35Text"/>
+            <xs:element name="Id" type="Max35Text"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- ================= SIGNATURE ================= -->
+    <xs:complexType name="SignatureEnvelope">
+        <xs:sequence>
+            <xs:any namespace="##any" processContents="lax"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- ================= SIMPLE TYPES ================= -->
+    <xs:simpleType name="BICFIDec2014Identifier">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Z0-9]{8}|[A-Z0-9]{11}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="Max35Text">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="35"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="CopyDuplicate1Code">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="COPY"/>
+            <xs:enumeration value="DUPL"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="Priority2Code">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="HIGH"/>
+            <xs:enumeration value="NORM"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

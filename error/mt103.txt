@@ -1,0 +1,18 @@
+{1:F01BANKUS33AXXX0000000000}        // Basic Header Block
+{2:I103BANKDEFFXXXXN}                // Application Header Block
+{3:{108:MT103TEST}}                   // User Header Block
+{4:
+:20:TRX20260213                        // Transaction Reference Number
+:23B:CRED                               // Bank Operation Code
+:32A:260213USD12345,67                  // Value Date (YYMMDD) + Currency + Amount
+:50K:/1234567890                        // Ordering Customer
+JOHN DOE
+123 MAIN STREET
+NEW YORK, NY
+:59:/9876543210                          // Beneficiary Customer
+JANE SMITH
+456 SECOND AVE
+LOS ANGELES, CA
+:70:INVOICE 12345                        // Remittance Information
+:71A:OUR                                  // Charges
+-}  

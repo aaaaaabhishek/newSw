@@ -1,0 +1,21 @@
+conditionalRules:
+
+  - type: equalsThenRequired
+    ifTag: "71A"
+    ifValue: "OUR"
+    requireTag: "71F"
+
+  - type: equalsThenRequired
+    ifTag: "23B"
+    ifValue: "CRED"
+    requireTag: "32A"
+
+  - type: onlyOneOf
+    tags: ["50A", "50K", "50F"]
+
+  - type: pattern
+    tag : "32A"
+    regex: '\d{6}[A-Z]{3}\d+(,\d{1,2})?'
+
+  - type: required
+    tag: "20"

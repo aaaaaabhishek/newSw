@@ -1,0 +1,50 @@
+conditionalRules:
+  - type: required
+    tag: "20"
+
+  - type: required
+    tag: "21"
+
+  - type: required
+    tag: "32A"
+
+  - type: required
+    tag: "58A"
+
+  - type: pattern
+    tag: "32A"
+    regex: '\d{6}[A-Z]{3}\d+(,\d{1,2})?'
+
+  - type: onlyOneOf
+    tags: ["52A", "52D"]
+
+  - type: onlyOneOf
+    tags: ["53A", "53B", "53D"]
+
+  - type: onlyOneOf
+    tags: ["54A", "54B", "54D"]
+
+  - type: onlyOneOf
+    tags: ["57A", "57B", "57D"]
+
+  - type: equalsThenRequired
+    ifTag: "23B"
+    ifValue: "CRED"
+    requireTag: "32A"
+
+#  - type: presentThenRequired
+#    ifTag: "52A"
+#    requireTag: "58A"
+#
+#  - type: presentThenRequired
+#    ifTag: "53A"
+#    requireTag: "54A"
+#
+#  - type: valueInList
+#    tag: "23B"
+#    allowedValues: ["CRED", "SPAY", "SSTD"]
+#
+#  - type: length
+#    tag: "20"
+#    min: 5
+#    max: 16

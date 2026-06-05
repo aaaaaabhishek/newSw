@@ -1,0 +1,55 @@
+package com.MT_MX.demo.ast;
+
+import com.MT_MX.demo.semantic.parser.ApplicationHeaderBlock;
+import com.MT_MX.demo.semantic.parser.BasicHeaderBlock;
+
+public final class SwiftAst {
+
+    private BasicHeaderBlock block1;
+    private ApplicationHeaderBlock block2;
+    private BlockNode block3;
+    private BlockNode block4;
+    private BlockNode block5;
+
+    // ----- Getters & Setters -----
+
+    public BasicHeaderBlock getBlock1() {
+        return block1;
+    }
+
+    public void setBlock1(BasicHeaderBlock block1) {
+        this.block1 = block1;
+    }
+
+    public ApplicationHeaderBlock getBlock2() {
+        return block2;
+    }
+
+    public void setBlock2(ApplicationHeaderBlock block2) {
+        this.block2 = block2;
+    }
+
+    public BlockNode getBlock3() {
+        return block3;
+    }
+
+    public void setBlock3(BlockNode block3) {
+        this.block3 = block3;
+    }
+
+    public BlockNode getBlock4() {
+        return block4;
+    }
+
+    public void setBlock4(BlockNode block4) {
+        this.block4 = block4;
+    }
+
+    public BlockNode getBlock5() {
+        return block5;
+    }
+
+    public void setBlock5(BlockNode block5) {
+        this.block5 = block5;
+    }
+}

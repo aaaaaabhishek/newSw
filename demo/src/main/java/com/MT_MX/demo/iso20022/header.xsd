@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="urn:iso:std:iso:20022:tech:xsd:head.001.001.01"
+           xmlns="urn:iso:std:iso:20022:tech:xsd:head.001.001.01"
+           elementFormDefault="qualified">
+
+    <!-- Root element -->
+    <xs:element name="AppHdr" type="AppHdrType"/>
+
+    <!-- AppHdr complex type -->
+    <xs:complexType name="AppHdrType">
+        <xs:sequence>
+            <xs:element name="Fr" type="FinancialInstitutionType"/>
+            <xs:element name="To" type="FinancialInstitutionType"/>
+            <xs:element name="BizMsgIdr" type="xs:string"/>
+            <xs:element name="MsgDefIdr" type="xs:string"/>
+            <xs:element name="CreDt" type="xs:dateTime"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Financial institution complex type -->
+    <xs:complexType name="FinancialInstitutionType">
+        <xs:sequence>
+            <xs:element name="FIId" type="FIIdType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="FIIdType">
+        <xs:sequence>
+            <xs:element name="FinInstnId" type="FinInstnIdType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="FinInstnIdType">
+        <xs:sequence>
+            <xs:element name="BICFI" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

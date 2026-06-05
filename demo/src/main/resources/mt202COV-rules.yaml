@@ -1,0 +1,87 @@
+conditionalRules:
+  - type: required
+    tag: "20"
+
+#  - type: required
+#    tag: "21"      # Related Reference
+#
+#  - type: required
+#    tag: "32A"     # Value Date / Currency / Amount
+#
+#  - type: required
+#    tag: "58A"     # Beneficiary Institution
+#
+#  # (underlying customer transfer info)
+#  - type: required
+#    tag: "50A"     # Ordering Customer (or 50K/50F depending on format)
+#
+#  - type: required
+#    tag: "59"      # Beneficiary Customer
+
+  # ========================
+  # Pattern Validation
+  # ========================
+  - type: pattern
+    tag: "32A"
+    regex: '\d{6}[A-Z]{3}\d+(,\d{1,2})?'
+
+  # ========================
+  # Only One Of (Mutually Exclusive)
+  # ========================
+  - type: onlyOneOf
+    tags: ["50A", "50K", "50F"]   # Ordering Customer formats
+
+  - type: onlyOneOf
+    tags: ["52A", "52D"]          # Ordering Institution
+
+  - type: onlyOneOf
+    tags: ["53A", "53B", "53D"]   # Sender's Correspondent
+
+  - type: onlyOneOf
+    tags: ["54A", "54B", "54D"]   # Receiver's Correspondent
+
+  - type: onlyOneOf
+    tags: ["57A", "57B", "57D"]   # Account With Institution
+
+  # ========================
+  # Conditional Rules
+  # ========================
+  - type: equalsThenRequired
+    ifTag: "23B"
+    ifValue: "CRED"
+    requireTag: "32A"
+
+  - type: equalsThenRequired
+    ifTag: "71A"
+    ifValue: "OUR"
+    requireTag: "71F"
+
+  # ========================
+  # Presence-Based Rules
+  # ========================
+  - type: presentThenRequired
+    ifTag: "52A"
+    requireTag: "58A"
+
+  - type: presentThenRequired
+    ifTag: "53A"
+    requireTag: "54A"
+
+#  # ========================
+#  # Value Restrictions
+#  # ========================
+#  - type: valueInList
+#    tag: "23B"
+#    allowedValues: ["CRED", "SPAY", "SSTD"]
+#
+#  - type: valueInList
+#    tag: "71A"
+#    allowedValues: ["OUR", "SHA", "BEN"]
+#
+#  # ========================
+#  # Length Checks
+#  # ========================
+#  - type: length
+#    tag: "20"
+#    min: 5
+#    max: 16
