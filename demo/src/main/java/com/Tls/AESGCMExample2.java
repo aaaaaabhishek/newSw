@@ -11,15 +11,13 @@ import java.util.Base64;
 public class AESGCMExample2 {
 
     public static void main(String[] args) throws Exception {
-        String key = "12345678901234567890123456789012"; // 32 chars = 256-bit
+        String key = "12345678901234567890123456789012"; 
 
-        // ----- Decrypt -----
       String decrypted = decrypt("cyOK6vF4/Nu0CwiCoFBzoy2504frL/yiKLuOdk0DbYq3yVdFb19KvOkPy48=", key);
         System.out.println("Decrypted: " + decrypted);
     }
 
 
-    // Decrypt method: extracts IV automatically
     public static String decrypt(String base64Combined, String key) throws Exception {
         byte[] combined = Base64.getDecoder().decode(base64Combined);
 
