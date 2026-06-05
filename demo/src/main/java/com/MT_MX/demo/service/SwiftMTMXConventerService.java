@@ -251,9 +251,8 @@ public class SwiftMTMXConventerService {
             throw new RuntimeException("MT → MX Conversion Failed", e);
         }
     }
-    // ==========================================================
+    
     // MT Type Validator Resolver
-    // ==========================================================
     private MTValidator resolveValidator(String mtType) {
         if ("103".equals(mtType))
             return mt103Validator;
